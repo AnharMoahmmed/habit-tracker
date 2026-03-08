@@ -5,11 +5,14 @@ import { HabitList } from '../components/HabitList';
 import { StreakCard } from '../components/StreakCard';
 import { ProgressChart } from '../components/ProgressChart';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { HabitForm } from '../components/HabitForm';
 
  
 export const Dashboard: React.FC = () => {
-  const { habits, toggleHabit, togglePin } = useHabits();
- 
+  const { habits, toggleHabit, togglePin , addHabit } = useHabits();
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   // Stats
   const bestStreak = habits.length > 0 ? Math.max(...habits.map(h => calculateStreak(h.completedDates))) : 0;
 
@@ -18,6 +21,11 @@ export const Dashboard: React.FC = () => {
   const pendingHabits = habits.filter(h => !h.isPinned && !isCompletedToday(h.completedDates)&& h.isActive);
   const completedHabits = habits.filter(h => !h.isPinned && isCompletedToday(h.completedDates)&& h.isActive);
  
+
+  // add handler for creating the habit 
+  const handleSubmit = (name: string)=> {
+    addHabit(name);
+  }
   return (
     <div className="p-8 max-w-5xl mx-auto w-full">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -25,7 +33,7 @@ export const Dashboard: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-500 mt-1">{format(new Date(), 'EEEE, MMMM do, yyyy')}</p>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 transition shadow-sm w-full md:w-auto justify-center">
+        <button onClick={()=> setIsFormOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 transition shadow-sm w-full md:w-auto justify-center">
           <Plus size={20} /> Create Habit
         </button>
       </header>
@@ -66,6 +74,13 @@ export const Dashboard: React.FC = () => {
           />
         </div>
       </div>
+      {/* added the shared Create habit modal */}
+      <HabitForm 
+      
+      isOpen={isFormOpen}
+      onClose={()=> setIsFormOpen(false)} 
+      onSubmit={handleSubmit}
+      title='Create New Habit'   />
     </div>
   );
 };
