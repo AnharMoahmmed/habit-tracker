@@ -21,6 +21,7 @@ export const HabitTable: React.FC<Props> = ({ habits, onEdit, onDelete, onToggle
             <th className="p-4 font-medium">Created Date</th>
             <th className="p-4 font-medium">Streak</th>
             <th className="p-4 font-medium">Status</th>
+            <th className="p-4 font-medium">Reminder Time</th>
             <th className="p-4 font-medium text-right">Actions</th>
           </tr>
         </thead>
@@ -34,6 +35,9 @@ export const HabitTable: React.FC<Props> = ({ habits, onEdit, onDelete, onToggle
                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${habit.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
                   {habit.isActive ? 'Active' : 'Inactive'}
                 </span>
+              </td>
+              <td className="p-4">
+               {habit.reminderTime ? habit.reminderTime : 'not set yet'} 
               </td>
               <td className="p-4 flex justify-end gap-2">
                 <button onClick={() => onToggleActive(habit.id)} className="p-2 text-gray-400 hover:text-blue-600 transition" title={habit.isActive ? "Deactivate" : "Activate"}>

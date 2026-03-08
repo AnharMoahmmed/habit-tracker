@@ -23,11 +23,11 @@ export const Habits: React.FC = () => {
     setIsFormOpen(true);
   };
 
-  const handleSubmit = (name: string) => {
+  const handleSubmit = (name: string , time: string) => {
     if (editingHabit) {
-      editHabit(editingHabit.id, name);
+      editHabit(editingHabit.id, name , time);
     } else {
-      addHabit(name);
+      addHabit(name , time);
     }
   };
 

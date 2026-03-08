@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import type { Habit } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
-
 export function useHabits() {
   const [habits, setHabits] = useState<Habit[]>(() => {
     const saved = localStorage.getItem('habits');
@@ -13,14 +12,15 @@ export function useHabits() {
     localStorage.setItem('habits', JSON.stringify(habits));
   }, [habits]);
 
-  const addHabit = (name: string) => {
+  const addHabit = (name: string , reminderTime: string) => {
     const newHabit: Habit = {
-      id: uuidv4(),
-      name,
-      createdAt: new Date().toISOString(),
-      completedDates: [],
-      isPinned: false,
-      isActive: true, // <-- NEW
+        id: uuidv4(),
+        name,
+        createdAt: new Date().toISOString(),
+        completedDates: [],
+        isPinned: false,
+        isActive: true,
+        reminderTime: reminderTime,
     };
     setHabits([...habits, newHabit]);
   };
@@ -51,14 +51,16 @@ export function useHabits() {
   };
 
   // NEW: Edit Habit
-  const editHabit = (id: string, newName: string) => {
-    setHabits(habits.map(habit => habit.id === id ? { ...habit, name: newName } : habit));
+  const editHabit = (id: string, newName: string , newTime: string) => {
+    setHabits(habits.map(habit => habit.id === id ? { ...habit, name: newName  , reminderTime: newTime} : habit));
   };
 
   // NEW: Toggle Active/Inactive
   const toggleActive = (id: string) => {
     setHabits(habits.map(habit => habit.id === id ? { ...habit, isActive: !habit.isActive } : habit));
   };
+
+  //NEW: 
 
   return { habits, addHabit, toggleHabit, togglePin, deleteHabit, editHabit, toggleActive };
 }

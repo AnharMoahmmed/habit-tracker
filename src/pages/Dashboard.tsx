@@ -23,8 +23,8 @@ export const Dashboard: React.FC = () => {
  
 
   // add handler for creating the habit 
-  const handleSubmit = (name: string)=> {
-    addHabit(name);
+  const handleSubmit = (name: string ,  time: string)=> {
+    addHabit(name , time);
   }
   return (
     <div className="p-8 max-w-5xl mx-auto w-full">

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Habit } from '../types';
 import { calculateStreak, isCompletedToday } from '../utils/dateUtils';
-import { CheckCircle2, Circle, Flame, Pin } from 'lucide-react';
+import { Bell, CheckCircle2, Circle, Flame, Pin } from 'lucide-react';
 
 interface Props {
   habit: Habit;
@@ -28,6 +28,12 @@ export const HabitItem: React.FC<Props> = ({ habit, toggleHabit, togglePin }) =>
           <Flame size={16} className={streak > 0 ? "text-orange-500" : ""} />
           {streak}
         </div>
+        {habit.reminderTime && (
+  <div className="flex items-center gap-1 text-sm text-blue-500 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-md" title="Reminder Time">
+    <Bell size={14} />
+    {habit.reminderTime}
+  </div>
+        )}
         <button onClick={() => togglePin(habit.id)} className="ml-2 outline-none">
           <Pin size={18} className={habit.isPinned ? "text-blue-600 fill-blue-600" : "text-gray-300 hover:text-gray-500"} />
         </button>

@@ -5,6 +5,7 @@ export interface Habit {
     completedDates: string[]; // Array of dates ("YYYY-MM-DD")
     isPinned: boolean; 
     isActive: boolean;
+    reminderTime: string ;
   }
 
 export interface UserSettings{

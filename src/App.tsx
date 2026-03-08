@@ -6,10 +6,18 @@ import { Statistics } from './pages/Statistics';
 import { Settings } from './pages/Settings'; // <-- NEW IMPORT
 import { LayoutDashboard, CheckCircle, ListChecks, BarChart2, Settings as SettingsIcon } from 'lucide-react'; // <-- NEW ICON
 import { useSettings } from './hooks/useSettings'; // <-- NEW IMPORT
+import { useHabits } from './hooks/useHabits';
+import { useReminders } from './hooks/useReminders';
+
 
 function App() {
   // Call useSettings here so the theme effect runs at the app's root!
   useSettings();
+
+  // NEW: Grab habits and start the reminder engine!
+  const { habits } = useHabits();
+  useReminders(habits);
+
 
   return (
     <BrowserRouter>
